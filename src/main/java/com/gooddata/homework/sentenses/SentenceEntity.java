@@ -1,12 +1,17 @@
 package com.gooddata.homework.sentenses;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.gooddata.homework.sentenses.wordsets.SetOfWordsEntity;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import java.util.Date;
 
 @Entity
-@SuppressWarnings("WeakerAccess")
+@SuppressWarnings({"WeakerAccess", "unused"})
 public class SentenceEntity
 {
     @Id
@@ -15,11 +20,8 @@ public class SentenceEntity
 
     private Date createdDate;
 
-    private String verb;
-
-    private String noun;
-
-    private String adjective;
+    @OneToOne
+    private SetOfWordsEntity setOfWordsEntity;
 
     private Integer showsCount;
 
@@ -28,12 +30,10 @@ public class SentenceEntity
         this.createdDate = new Date();
     }
 
-    SentenceEntity(String verb, String noun, String adjective)
+    SentenceEntity(SetOfWordsEntity setOfWords)
     {
+        this.setOfWordsEntity = setOfWords;
         this.createdDate = new Date();
-        this.verb = verb;
-        this.noun = noun;
-        this.adjective = adjective;
         this.showsCount = 0;
     }
 
@@ -42,14 +42,16 @@ public class SentenceEntity
         return id;
     }
 
-    public String getSentence()
+    public String getText(SentenceStyle sentenceStyle)
     {
-        return noun + " " + verb + " " + adjective;
-    }
-
-    public String getYodaTalkSentence()
-    {
-        return adjective + " " + noun + " " + verb;
+        switch(sentenceStyle)
+        {
+            case NORMAL:
+                return setOfWordsEntity.getNoun() + " " + setOfWordsEntity.getVerb() + " " + setOfWordsEntity.getAdjective();
+            case YODA_TALK:
+                return setOfWordsEntity.getAdjective() + " " + setOfWordsEntity.getNoun() + " " + setOfWordsEntity.getVerb();
+            default: throw new RuntimeException("Unknown sentence style!");
+        }
     }
 
     public void increaseShowsCount()
@@ -60,21 +62,6 @@ public class SentenceEntity
     public Date getCreatedDate()
     {
         return createdDate;
-    }
-
-    public String getVerb()
-    {
-        return verb;
-    }
-
-    public String getNoun()
-    {
-        return noun;
-    }
-
-    public String getAdjective()
-    {
-        return adjective;
     }
 
     public Integer getShowsCount()

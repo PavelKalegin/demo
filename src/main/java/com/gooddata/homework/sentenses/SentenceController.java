@@ -30,13 +30,13 @@ public class SentenceController
     @GetMapping("/{sentenceID}")
     public String getById(@PathVariable Long sentenceID)
     {
-        return sentenceService.getById(sentenceID).getSentence();
+        return sentenceService.getById(sentenceID).getText(SentenceStyle.NORMAL);
     }
 
     @GetMapping("/{sentenceID}/yodaTalk")
-    public String getByIdYodaTalk(@PathVariable Long id)
+    public String getByIdYodaTalk(@PathVariable Long sentenceID)
     {
-        return sentenceService.getById(id).getYodaTalkSentence();
+        return sentenceService.getById(sentenceID).getText(SentenceStyle.YODA_TALK);
     }
 
 }
