@@ -5,41 +5,38 @@ import com.gooddata.homework.words.WordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Optional;
 
 @Service
-class SentenceService
+public class SentenceService
 {
-    private Map<String, SentenceEntity> sentences = new HashMap<>();
-
     @Autowired
     private WordService wordService;
 
-    void generateSentence()
+    @Autowired
+    private SentenceRepository sentenceRepository;
+
+    public void generateSentence()
     {
-        SentenceEntity entity = new SentenceEntity(
+        sentenceRepository.save(new SentenceEntity(
                 wordService.getRandom(WordCategory.VERB).getWord(),
                 wordService.getRandom(WordCategory.NOUN).getWord(),
-                wordService.getRandom(WordCategory.ADJECTIVE).getWord());
-        sentences.put(entity.getId(), entity);
+                wordService.getRandom(WordCategory.ADJECTIVE).getWord()));
     }
 
-    SentenceEntity getById(String id)
+    SentenceEntity getById(long id)
     {
-        SentenceEntity sentence = null;
-        if (sentences.containsKey(id))
-        {
-            sentence = sentences.get(id);
-            sentence.increaseShowsCount();
-        }
-        return sentence;
+        Optional<SentenceEntity> sentence = sentenceRepository.findById(id);
+        sentence.ifPresent(sentenceEntity -> {
+            sentenceEntity.increaseShowsCount();
+            sentenceRepository.save(sentenceEntity);
+        });
+        return sentence.orElse(null);
     }
 
-    Collection<SentenceEntity> getSentences()
+    Iterable<SentenceEntity> getSentences()
     {
-        return sentences.values();
+        return sentenceRepository.findAll();
     }
 
 }

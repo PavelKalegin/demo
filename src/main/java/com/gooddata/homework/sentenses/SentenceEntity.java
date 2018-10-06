@@ -1,12 +1,17 @@
 package com.gooddata.homework.sentenses;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.util.Date;
-import java.util.UUID;
 
+@Entity
 @SuppressWarnings("WeakerAccess")
 public class SentenceEntity
 {
-    private String id;
+    @Id
+    @GeneratedValue
+    private long id;
 
     private Date createdDate;
 
@@ -18,9 +23,13 @@ public class SentenceEntity
 
     private Integer showsCount;
 
+    public SentenceEntity()
+    {
+        this.createdDate = new Date();
+    }
+
     SentenceEntity(String verb, String noun, String adjective)
     {
-        this.id = UUID.randomUUID().toString();
         this.createdDate = new Date();
         this.verb = verb;
         this.noun = noun;
@@ -28,7 +37,7 @@ public class SentenceEntity
         this.showsCount = 0;
     }
 
-    public String getId()
+    public long getId()
     {
         return id;
     }

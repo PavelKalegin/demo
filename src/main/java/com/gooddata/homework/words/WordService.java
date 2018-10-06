@@ -1,42 +1,49 @@
 package com.gooddata.homework.words;
 
+import com.gooddata.homework.words.exceptions.WordNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.transaction.Transactional;
 import java.util.Random;
-import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class WordService
 {
-    private final List<WordEntity> wordEntities = new ArrayList<>();
+    @Autowired
+    private WordRepository wordRepository;
 
-    List<WordEntity> getWordEntities()
+    Iterable<WordEntity> getWordEntities()
     {
-        return wordEntities;
+        return wordRepository.findAll();
     }
 
     void addWord(WordEntity wordEntity)
     {
-        wordEntities.add(wordEntity);
+        wordRepository.save(wordEntity);
     }
 
     WordEntity findWord(String word)
     {
-        return wordEntities.stream()
-                .filter(wordEntity -> wordEntity.getWord().equals(word))
-                .findAny().orElse(null);
+        return wordRepository.findById(word).orElse(null);
     }
 
-    public WordEntity getRandom(WordCategory wordCategory)
+    /**
+    *
+     */
+    @Transactional
+    public WordEntity getRandom(WordCategory wordCategory) throws WordNotFoundException
     {
-        Random random = new Random();
-        List<WordEntity> words = wordEntities.stream()
-                .filter(wordEntity -> wordEntity.getWordCategory().equals(wordCategory))
-                .collect(Collectors.toList());
-        return words.get(random.nextInt(words.size()));
+        try(Stream<WordEntity> stream = wordRepository.findAllByWordCategory(wordCategory))
+        {
+            int count = (int) stream.count();
+            if (count == 0)
+                throw new WordNotFoundException(wordCategory);
+            return wordRepository.findAllByWordCategory(wordCategory)
+                    .skip(new Random().nextInt(count))
+                    .findAny()
+                    .orElseThrow(() -> new WordNotFoundException(wordCategory));
+        }
     }
-
-
 }

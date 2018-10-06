@@ -7,8 +7,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Collection;
-
 @RestController
 @RequestMapping("sentences")
 @SuppressWarnings("unused")
@@ -18,7 +16,7 @@ public class SentenceController
     private SentenceService sentenceService;
 
     @GetMapping("/")
-    public Collection<SentenceEntity> getAllSentences()
+    public Iterable<SentenceEntity> getAllSentences()
     {
         return sentenceService.getSentences();
     }
@@ -30,13 +28,13 @@ public class SentenceController
     }
 
     @GetMapping("/{sentenceID}")
-    public String getById(@PathVariable String id)
+    public String getById(@PathVariable Long sentenceID)
     {
-        return sentenceService.getById(id).getSentence();
+        return sentenceService.getById(sentenceID).getSentence();
     }
 
     @GetMapping("/{sentenceID}/yodaTalk")
-    public String getByIdYodaTalk(@PathVariable String id)
+    public String getByIdYodaTalk(@PathVariable Long id)
     {
         return sentenceService.getById(id).getYodaTalkSentence();
     }
