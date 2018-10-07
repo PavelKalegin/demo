@@ -1,10 +1,12 @@
 package com.gooddata.homework.words;
 
+import com.gooddata.homework.words.exceptions.ForbiddenWordUsingException;
 import com.gooddata.homework.words.exceptions.WordNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Optional;
 import java.util.Random;
 import java.util.stream.Stream;
 
@@ -14,6 +16,10 @@ public class WordService
     @Autowired
     private WordRepository wordRepository;
 
+    @Autowired
+    private CheckWordImpl checkWord;
+
+
     Iterable<WordEntity> getWordEntities()
     {
         return wordRepository.findAll();
@@ -21,16 +27,20 @@ public class WordService
 
     void addWord(WordEntity wordEntity)
     {
+        if(checkWord.isForbidden(wordEntity))
+        {
+            throw new ForbiddenWordUsingException(wordEntity.getWord());
+        }
         wordRepository.save(wordEntity);
     }
 
-    WordEntity findWord(String word)
+    Optional<WordEntity> findWord(String word)
     {
-        return wordRepository.findById(word).orElse(null);
+        return wordRepository.findById(word);
     }
 
     /**
-    *
+    * TODO: explain it!
      */
     @Transactional
     public WordEntity getRandom(WordCategory wordCategory) throws WordNotFoundException
@@ -46,4 +56,5 @@ public class WordService
                     .orElseThrow(() -> new WordNotFoundException(wordCategory));
         }
     }
+
 }

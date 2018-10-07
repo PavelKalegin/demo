@@ -1,13 +1,13 @@
 package com.gooddata.homework.words;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 
 @RestController
 @RequestMapping("words")
@@ -24,14 +24,15 @@ public class WordController
     }
 
     @PutMapping("/{word}")
-    public void addWord(@PathVariable String word, @RequestBody @Validated(WordCategory.class) WordCategory wordCategory)
+    public void addWord(@PathVariable String word, @RequestBody WordEntity wordEntity)
     {
-        wordService.addWord(new WordEntity(word, wordCategory));
+        wordEntity.setWord(word);
+        wordService.addWord(wordEntity);
     }
 
     @GetMapping("/{word}")
     public WordEntity findByWord(@PathVariable String word)
     {
-        return wordService.findWord(word);
+        return wordService.findWord(word).orElse(null);
     }
 }

@@ -23,8 +23,8 @@ public class SentenceService
 
     public void generateSentence()
     {
-        String noun  = wordService.getRandom(WordCategory.VERB).getWord();
-        String verb = wordService.getRandom(WordCategory.NOUN).getWord();
+        String noun  = wordService.getRandom(WordCategory.NOUN).getWord();
+        String verb = wordService.getRandom(WordCategory.VERB).getWord();
         String adjective = wordService.getRandom(WordCategory.ADJECTIVE).getWord();
 
         sentenceRepository.save(

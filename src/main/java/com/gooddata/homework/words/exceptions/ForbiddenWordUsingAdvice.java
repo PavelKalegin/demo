@@ -8,12 +8,13 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ControllerAdvice
 @SuppressWarnings("unused")
-public class WordNotFoundAdvice
+public class ForbiddenWordUsingAdvice
 {
     @ResponseBody
-    @ExceptionHandler(WordNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    String wordNotFoundHandler(WordNotFoundException ex) {
+    @ExceptionHandler(ForbiddenWordUsingException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    String forbiddenWordUsingHandler(ForbiddenWordUsingException ex)
+    {
         return ex.getMessage();
     }
 }

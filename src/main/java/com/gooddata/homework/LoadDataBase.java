@@ -30,7 +30,6 @@ public class LoadDataBase
             wordRepository.save(new WordEntity("good", WordCategory.ADJECTIVE));
 
             IntStream.range(0, 100).forEach(i -> sentenceService.generateSentence());
-
         };
     }
 }
