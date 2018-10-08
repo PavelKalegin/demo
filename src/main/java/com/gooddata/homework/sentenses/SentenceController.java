@@ -28,15 +28,15 @@ public class SentenceController
     }
 
     @GetMapping("/{sentenceID}")
-    public String getById(@PathVariable Long sentenceID)
+    public SentenceEntity getById(@PathVariable Long sentenceID)
     {
-        return sentenceService.getById(sentenceID).getText(SentenceStyle.NORMAL);
+        return sentenceService.getById(sentenceID).orElse(null);
     }
 
     @GetMapping("/{sentenceID}/yodaTalk")
     public String getByIdYodaTalk(@PathVariable Long sentenceID)
     {
-        return sentenceService.getById(sentenceID).getText(SentenceStyle.YODA_TALK);
+        return sentenceService.getById(sentenceID).map(SentenceEntity::getYodaText).orElse(null);
     }
 
 }

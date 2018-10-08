@@ -42,16 +42,14 @@ public class SentenceEntity
         return id;
     }
 
-    public String getText(SentenceStyle sentenceStyle)
+    public String getText()
     {
-        switch(sentenceStyle)
-        {
-            case NORMAL:
-                return setOfWordsEntity.getNoun() + " " + setOfWordsEntity.getVerb() + " " + setOfWordsEntity.getAdjective();
-            case YODA_TALK:
-                return setOfWordsEntity.getAdjective() + " " + setOfWordsEntity.getNoun() + " " + setOfWordsEntity.getVerb();
-            default: throw new RuntimeException("Unknown sentence style!");
-        }
+        return setOfWordsEntity.getNoun() + " " + setOfWordsEntity.getVerb() + " " + setOfWordsEntity.getAdjective();
+    }
+
+    public String getYodaText()
+    {
+        return setOfWordsEntity.getAdjective() + " " + setOfWordsEntity.getNoun() + " " + setOfWordsEntity.getVerb();
     }
 
     public void increaseShowsCount()

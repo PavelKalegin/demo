@@ -34,14 +34,14 @@ public class SentenceService
         );
     }
 
-    SentenceEntity getById(long id)
+    Optional<SentenceEntity> getById(long id)
     {
         Optional<SentenceEntity> sentence = sentenceRepository.findById(id);
         sentence.ifPresent(sentenceEntity -> {
             sentenceEntity.increaseShowsCount();
             sentenceRepository.save(sentenceEntity);
         });
-        return sentence.orElse(null);
+        return sentence;
     }
 
     Iterable<SentenceEntity> getSentences()
