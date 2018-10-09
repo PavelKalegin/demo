@@ -1,6 +1,8 @@
-package com.gooddata.homework.words;
+package com.gooddata.homework.models.repositories;
 
 
+import com.gooddata.homework.models.WordEntity;
+import com.gooddata.homework.models.WordCategory;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.stream.Stream;

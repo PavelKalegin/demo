@@ -1,4 +1,4 @@
-package com.gooddata.homework.words.exceptions;
+package com.gooddata.homework.exceptions;
 
 public class ForbiddenWordUsingException extends RuntimeException
 {

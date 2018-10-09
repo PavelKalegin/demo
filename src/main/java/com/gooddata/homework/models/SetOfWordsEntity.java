@@ -1,4 +1,4 @@
-package com.gooddata.homework.sentenses.wordsets;
+package com.gooddata.homework.models;
 
 
 import javax.persistence.Entity;

@@ -1,5 +1,9 @@
-package com.gooddata.homework.sentenses;
+package com.gooddata.homework.controllers;
 
+import com.gooddata.homework.models.SentenceEntity;
+import com.gooddata.homework.models.SentenceView;
+import com.gooddata.homework.models.dto.SentenceDTO;
+import com.gooddata.homework.services.SentenceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,15 +32,15 @@ public class SentenceController
     }
 
     @GetMapping("/{sentenceID}")
-    public SentenceEntity getById(@PathVariable Long sentenceID)
+    public SentenceDTO getById(@PathVariable Long sentenceID)
     {
-        return sentenceService.getById(sentenceID).orElse(null);
+        return sentenceService.getById(sentenceID, SentenceView.NORMAL).orElse(null);
     }
 
     @GetMapping("/{sentenceID}/yodaTalk")
-    public String getByIdYodaTalk(@PathVariable Long sentenceID)
+    public SentenceDTO getByIdYodaTalk(@PathVariable Long sentenceID)
     {
-        return sentenceService.getById(sentenceID).map(SentenceEntity::getYodaText).orElse(null);
+        return sentenceService.getById(sentenceID, SentenceView.YODA_TALK).orElse(null);
     }
 
 }

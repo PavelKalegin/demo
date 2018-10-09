@@ -1,19 +1,21 @@
-package com.gooddata.homework;
+package com.gooddata.homework.config;
 
-import com.gooddata.homework.sentenses.SentenceService;
-import com.gooddata.homework.words.WordCategory;
-import com.gooddata.homework.words.WordEntity;
-import com.gooddata.homework.words.WordRepository;
+import com.gooddata.homework.models.WordCategory;
+import com.gooddata.homework.models.WordEntity;
+import com.gooddata.homework.models.repositories.WordRepository;
+import com.gooddata.homework.services.SentenceService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import javax.transaction.Transactional;
 import java.util.stream.IntStream;
 
 @Configuration
 public class LoadDataBase
 {
     @Bean
+    @Transactional
     CommandLineRunner initDataBase(WordRepository wordRepository, SentenceService sentenceService)
     {
         return args -> {

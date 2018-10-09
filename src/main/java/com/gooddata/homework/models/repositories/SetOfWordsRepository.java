@@ -1,5 +1,6 @@
-package com.gooddata.homework.sentenses.wordsets;
+package com.gooddata.homework.models.repositories;
 
+import com.gooddata.homework.models.SetOfWordsEntity;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;

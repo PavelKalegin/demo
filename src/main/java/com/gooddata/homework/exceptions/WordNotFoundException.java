@@ -1,6 +1,6 @@
-package com.gooddata.homework.words.exceptions;
+package com.gooddata.homework.exceptions;
 
-import com.gooddata.homework.words.WordCategory;
+import com.gooddata.homework.models.WordCategory;
 
 public class WordNotFoundException extends RuntimeException
 {

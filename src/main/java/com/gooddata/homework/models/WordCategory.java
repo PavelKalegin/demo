@@ -1,4 +1,4 @@
-package com.gooddata.homework.words;
+package com.gooddata.homework.models;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 

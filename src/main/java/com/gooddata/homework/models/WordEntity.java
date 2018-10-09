@@ -1,4 +1,4 @@
-package com.gooddata.homework.words;
+package com.gooddata.homework.models;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

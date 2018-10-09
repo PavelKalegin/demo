@@ -1,9 +1,5 @@
-package com.gooddata.homework.sentenses;
+package com.gooddata.homework.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.gooddata.homework.sentenses.wordsets.SetOfWordsEntity;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -30,7 +26,7 @@ public class SentenceEntity
         this.createdDate = new Date();
     }
 
-    SentenceEntity(SetOfWordsEntity setOfWords)
+    public SentenceEntity(SetOfWordsEntity setOfWords)
     {
         this.setOfWordsEntity = setOfWords;
         this.createdDate = new Date();
@@ -42,21 +38,6 @@ public class SentenceEntity
         return id;
     }
 
-    public String getText()
-    {
-        return setOfWordsEntity.getNoun() + " " + setOfWordsEntity.getVerb() + " " + setOfWordsEntity.getAdjective();
-    }
-
-    public String getYodaText()
-    {
-        return setOfWordsEntity.getAdjective() + " " + setOfWordsEntity.getNoun() + " " + setOfWordsEntity.getVerb();
-    }
-
-    public void increaseShowsCount()
-    {
-        this.showsCount++;
-    }
-
     public Date getCreatedDate()
     {
         return createdDate;
@@ -65,5 +46,20 @@ public class SentenceEntity
     public Integer getShowsCount()
     {
         return showsCount;
+    }
+
+    public SetOfWordsEntity getSetOfWordsEntity()
+    {
+        return setOfWordsEntity;
+    }
+
+    public void setSetOfWordsEntity(SetOfWordsEntity setOfWordsEntity)
+    {
+        this.setOfWordsEntity = setOfWordsEntity;
+    }
+
+    public void setShowsCount(Integer showsCount)
+    {
+        this.showsCount = showsCount;
     }
 }
