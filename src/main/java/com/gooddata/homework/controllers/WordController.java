@@ -40,8 +40,8 @@ public class WordController
     }
 
     @GetMapping("/{word}")
-    public String findByWord(@PathVariable String word) throws JsonProcessingException
+    public WordDTO findByWord(@PathVariable String word)
     {
-        return mapper.writeValueAsString(wordService.findWord(word).orElse(null));
+        return wordService.findWord(word).orElse(null);
     }
 }

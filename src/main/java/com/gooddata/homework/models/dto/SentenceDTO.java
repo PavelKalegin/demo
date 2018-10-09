@@ -1,7 +1,9 @@
 package com.gooddata.homework.models.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonRootName;
 
+@JsonRootName("sentence")
 public class SentenceDTO
 {
     @JsonIgnore
