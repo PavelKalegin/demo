@@ -1,7 +1,6 @@
 package com.gooddata.homework.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import com.gooddata.homework.services.CheckWord;
 import com.gooddata.homework.services.CheckWordImpl;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -24,8 +23,6 @@ public class AppConfig
     @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
     public ObjectMapper getObjectMapper()
     {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.enable(SerializationFeature.WRAP_ROOT_VALUE);
-        return mapper;
+        return new ObjectMapper();
     }
 }

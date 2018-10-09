@@ -47,7 +47,7 @@ public class SentenceService
                     sentenceRepository.save(sentenceEntity);
                     return new SentenceDTO(sentenceEntity.getId(),
                             getSentenceText(sentenceEntity, sentenceView),
-                            sentenceEntity.getShowsCount());
+                            getShowsCount(sentenceEntity, sentenceView));
                 }
         );
     }
@@ -71,4 +71,13 @@ public class SentenceService
         }
     }
 
+    private Integer getShowsCount(SentenceEntity sentence, SentenceView sentenceView)
+    {
+        switch(sentenceView)
+        {
+            case NORMAL: return sentence.getShowsCount();
+            case YODA_TALK: return null;
+            default: throw new RuntimeException("Unsupported sentence view " + sentenceView.toString());
+        }
+    }
 }

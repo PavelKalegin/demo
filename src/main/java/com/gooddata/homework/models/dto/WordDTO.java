@@ -1,13 +1,16 @@
 package com.gooddata.homework.models.dto;
 
-import com.fasterxml.jackson.annotation.JsonRootName;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.gooddata.homework.models.WordCategory;
 import com.gooddata.homework.models.WordEntity;
 
-@JsonRootName(value = "word")
+@JsonTypeName("word")
+@JsonTypeInfo(include = JsonTypeInfo.As.WRAPPER_OBJECT ,use = JsonTypeInfo.Id.NAME)
 public class WordDTO
 {
     private String word;
+
     private WordCategory wordCategory;
 
     public WordDTO()

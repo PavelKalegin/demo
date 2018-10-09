@@ -1,9 +1,13 @@
 package com.gooddata.homework.models.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonRootName;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 
-@JsonRootName("sentence")
+@JsonTypeName("sentence")
+@JsonTypeInfo(include = JsonTypeInfo.As.WRAPPER_OBJECT ,use = JsonTypeInfo.Id.NAME)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class SentenceDTO
 {
     @JsonIgnore
@@ -11,9 +15,9 @@ public class SentenceDTO
 
     private String text;
 
-    private int showsCount;
+    private Integer showsCount;
 
-    public SentenceDTO(long id, String text, int showsCount)
+    public SentenceDTO(long id, String text, Integer showsCount)
     {
         this.id = id;
         this.text = text;
@@ -45,12 +49,12 @@ public class SentenceDTO
         this.text = text;
     }
 
-    public int getShowsCount()
+    public Integer getShowsCount()
     {
         return showsCount;
     }
 
-    public void setShowsCount(int showsCount)
+    public void setShowsCount(Integer showsCount)
     {
         this.showsCount = showsCount;
     }
