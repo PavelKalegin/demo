@@ -1,6 +1,5 @@
 package com.gooddata.homework.controllers;
 
-import com.gooddata.homework.models.SentenceEntity;
 import com.gooddata.homework.models.SentenceView;
 import com.gooddata.homework.models.dto.SentenceDTO;
 import com.gooddata.homework.services.SentenceService;
@@ -20,7 +19,7 @@ public class SentenceController
     private SentenceService sentenceService;
 
     @GetMapping("/")
-    public Iterable<SentenceEntity> getAllSentences()
+    public Iterable<SentenceDTO> getAllSentences()
     {
         return sentenceService.getSentences();
     }

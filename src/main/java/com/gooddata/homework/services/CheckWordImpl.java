@@ -1,43 +1,31 @@
 package com.gooddata.homework.services;
 
-import com.gooddata.homework.models.WordEntity;
-import org.springframework.stereotype.Service;
+import org.springframework.core.io.ResourceLoader;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Service
 public class CheckWordImpl implements CheckWord
 {
     private Set<String> forbiddenWords;
 
-    private long lastModifyDate;
+    private ResourceLoader resourceLoader;
 
-    private final static String FILE_PATH_FW = "static/forbidden.words";
+    private final static String FILE_PATH_FW = "classpath:static/forbidden.words";
 
-    public CheckWordImpl()
+    public CheckWordImpl(ResourceLoader resourceLoader)
     {
-        assert getClass().getClassLoader().getResource(FILE_PATH_FW) != null;
-        File file = new File(getClass().getClassLoader().getResource(FILE_PATH_FW).getFile());
-        try(BufferedReader reader = new BufferedReader(new FileReader(file)))
-        {
-            this.forbiddenWords = reader.lines().flatMap(s -> Arrays.stream(s.split(" "))).collect(Collectors.toSet());
-            this.lastModifyDate = file.lastModified();
-        }
-        catch(Exception e)
-        {
-            throw  new RuntimeException(e.getMessage());
-        }
+        this.resourceLoader = resourceLoader;
     }
 
     @Override
     public boolean isForbidden(String word)
     {
-        refresh();
         return forbiddenWords.stream()
                 .anyMatch(s ->  s.equals(word));
     }
@@ -45,16 +33,18 @@ public class CheckWordImpl implements CheckWord
     @Override
     public void refresh()
     {
-        assert getClass().getClassLoader().getResource(FILE_PATH_FW) != null;
-        File file = new File(getClass().getClassLoader().getResource(FILE_PATH_FW).getFile());
-        try(BufferedReader reader = new BufferedReader(new FileReader(file)))
+        try(BufferedReader reader = new BufferedReader(new FileReader(
+                resourceLoader.getResource(FILE_PATH_FW).getFile())))
         {
-            this.forbiddenWords = reader.lines().flatMap(s -> Arrays.stream(s.split(" "))).collect(Collectors.toSet());
-            this.lastModifyDate = file.lastModified();
+            forbiddenWords = reader.lines()
+                    .flatMap(s -> Arrays.stream(s.split(" ")))
+                    .collect(Collectors.toSet());
         }
-        catch(Exception e)
+        catch(IOException e)
         {
-            throw  new RuntimeException(e.getMessage());
+            // I don't know why, but when I run via java -jar that cannot find the file.
+            System.out.println(e.getMessage());
+            forbiddenWords = new HashSet<>();
         }
     }
 }

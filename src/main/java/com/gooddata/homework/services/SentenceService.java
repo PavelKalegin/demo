@@ -2,16 +2,17 @@ package com.gooddata.homework.services;
 
 import com.gooddata.homework.models.SentenceEntity;
 import com.gooddata.homework.models.SentenceView;
+import com.gooddata.homework.models.SetOfWordsEntity;
+import com.gooddata.homework.models.WordCategory;
 import com.gooddata.homework.models.dto.SentenceDTO;
 import com.gooddata.homework.models.repositories.SentenceRepository;
-import com.gooddata.homework.models.SetOfWordsEntity;
 import com.gooddata.homework.models.repositories.SetOfWordsRepository;
-import com.gooddata.homework.models.WordCategory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
+import java.util.stream.StreamSupport;
 
 @Service
 public class SentenceService
@@ -45,16 +46,16 @@ public class SentenceService
                 sentenceEntity -> {
                     sentenceEntity.setShowsCount(sentenceEntity.getShowsCount() + 1);
                     sentenceRepository.save(sentenceEntity);
-                    return new SentenceDTO(sentenceEntity.getId(),
-                            getSentenceText(sentenceEntity, sentenceView),
+                    return new SentenceDTO(getSentenceText(sentenceEntity, sentenceView),
                             getShowsCount(sentenceEntity, sentenceView));
                 }
         );
     }
 
-    public Iterable<SentenceEntity> getSentences()
+    public Iterable<SentenceDTO> getSentences()
     {
-        return sentenceRepository.findAll();
+        return StreamSupport.stream(sentenceRepository.findAll().spliterator(), false)
+                .map(SentenceDTO::new)::iterator;
     }
 
     private String getSentenceText(SentenceEntity sentence, SentenceView sentenceView)

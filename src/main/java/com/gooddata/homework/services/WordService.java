@@ -1,11 +1,11 @@
 package com.gooddata.homework.services;
 
+import com.gooddata.homework.exceptions.ForbiddenWordUsingException;
+import com.gooddata.homework.exceptions.WordNotFoundException;
 import com.gooddata.homework.models.WordCategory;
 import com.gooddata.homework.models.WordEntity;
 import com.gooddata.homework.models.dto.WordDTO;
 import com.gooddata.homework.models.repositories.WordRepository;
-import com.gooddata.homework.exceptions.ForbiddenWordUsingException;
-import com.gooddata.homework.exceptions.WordNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +25,7 @@ public class WordService
     private WordRepository wordRepository;
 
     @Autowired
-    private CheckWordImpl checkWord;
+    private CheckWord checkWord;
 
 
     public Collection<WordDTO> getWordEntities()

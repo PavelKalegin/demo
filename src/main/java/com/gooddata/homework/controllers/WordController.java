@@ -1,8 +1,6 @@
 package com.gooddata.homework.controllers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.gooddata.homework.models.WordEntity;
 import com.gooddata.homework.models.dto.WordDTO;
 import com.gooddata.homework.services.WordService;
 import org.springframework.beans.factory.annotation.Autowired;
